@@ -60,38 +60,3 @@ export const deleteKegiatan = async (req, res) => {
     res.status(500).json({ message: "Terjadi kesalahan dalam menghapus data" });
   }
 };
-
-// export const getDataByKegiatanKey = async (req, res) => {
-//   try {
-//     const kegiatanKey = req.params.kegiatanKey;
-
-//     // Ambil data absen berdasarkan key kegiatan
-//     const absenList = await AbsensModel.findAll({
-//       where: { KeyKegiatan: kegiatanKey },
-//     });
-
-//     if (absenList.length === 0) {
-//       return res
-//         .status(404)
-//         .json({ message: "Tidak ada data absen untuk key kegiatan ini" });
-//     }
-
-//     const pesertaIds = absenList.map((absen) => absen.IDPeserta);
-
-//     // Ambil data peserta berdasarkan ID peserta dalam absenList
-//     const pesertaList = await PesertaModel.findAll({
-//       where: { id: pesertaIds },
-//     });
-
-//     if (pesertaList.length === 0) {
-//       return res
-//         .status(404)
-//         .json({ message: "Tidak ada data peserta untuk key kegiatan ini" });
-//     }
-
-//     res.json({ absenList, pesertaList });
-//   } catch (error) {
-//     console.log("Error:", error);
-//     res.status(500).json({ message: "Terjadi kesalahan dalam mengambil data" });
-//   }
-// };
