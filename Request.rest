@@ -1,0 +1,71 @@
+GET http://localhost:4000/peserta
+###
+GET http://localhost:4000/peserta/3
+
+###
+POST http://localhost:4000/peserta
+Content-Type: application/json
+
+{
+  "name":"boby",
+  "nim":202065006,
+  "email":"yudi@gmail.com",
+  "umur":20,
+  "gender":"male"
+}
+###
+PATCH  http://localhost:4000/peserta/1
+Content-Type: application/json
+
+{
+  "name":"akmal",
+  "email":"akmall@gmail.com",
+  "umur":21,
+  "gender":"male",
+  "absent":1328
+}
+###
+DELETE  http://localhost:4000/peserta/1
+
+
+###
+GET http://localhost:4000/kegiatan
+###
+GET http://localhost:4000/kegiatan/2
+
+###
+POST http://localhost:4000/kegiatan
+Content-Type: application/json
+
+{
+  "name":"kuliah",
+  "waktum":"8:00",
+  "waktus":"10:00"
+}
+###
+PATCH  http://localhost:4000/kegiatan/2
+Content-Type: application/json
+
+{
+  "name":"akmal",
+  "waktum":"20:00",
+  "waktus":"akmall@gmail.com"
+}
+###
+DELETE  http://localhost:4000/kegiatan/6260
+
+###
+GET http://localhost:4000/absent
+###
+GET http://localhost:4000/absent/kegiatan/9378
+###
+GET http://localhost:4000/absent/peserta/3
+###
+
+POST http://localhost:4000/absent
+Content-Type: application/json
+
+{
+  "IDPeserta":2,
+  "KeyKegiatan":"310"
+}
