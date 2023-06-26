@@ -1,6 +1,5 @@
 import KegiatanModel from "../models/KegiatanModel.js";
 import AbsensModel from "../models/AbsentModel.js";
-import PesertaModel from "../models/PesertaModel.js";
 
 export const getKegiatan = async (req, res) => {
   try {

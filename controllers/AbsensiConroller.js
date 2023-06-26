@@ -108,23 +108,11 @@ export const getByidSudahAbsent = async (req, res) => {
   }
 };
 
-export const deleteAbsentKegiatanBykey = async (req, res) => {
-  const key = req.params.key;
+export const deleteAbsentByIdAndKey = async (req, res) => {
+  const { id, key } = req.params;
 
   try {
-    await AbsentModel.destroy({ where: { KeyKegiatan: key } });
-
-    res.json({ message: "Data absent berhasi di hapus" });
-  } catch (error) {
-    res.status(500).json({ message: "Terjadi kesalahan dalam menghapus data" });
-  }
-};
-
-export const deleteAbsentPesertaById = async (req, res) => {
-  const id = req.params.id;
-
-  try {
-    await AbsentModel.destroy({ where: { IDPeserta: id } });
+    await AbsentModel.destroy({ where: { IDPeserta: id, KeyKegiatan: key } });
 
     res.json({ message: "Data absent berhasi di hapus" });
   } catch (error) {

@@ -10,7 +10,6 @@ import {
 const KegiatanRouter = express.Router();
 
 KegiatanRouter.get("/kegiatan", getKegiatan);
-// KegiatanRouter.get("/kegiatan/:", getDataByKegiatanKey);
 KegiatanRouter.get("/kegiatan/:id", getKegiatanById);
 KegiatanRouter.post("/kegiatan", createKegiatan);
 KegiatanRouter.patch("/kegiatan/:id", updateKegiatan);
