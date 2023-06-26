@@ -69,3 +69,6 @@ Content-Type: application/json
   "IDPeserta":2,
   "KeyKegiatan":"310"
 }
+
+###
+DELETE  http://localhost:4000/absent/kegiatan/4
