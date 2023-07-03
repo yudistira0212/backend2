@@ -24,7 +24,7 @@ const PesertaModel = db.define(
       allowNull: false,
     },
     gender: DataTypes.STRING,
-    absent: DataTypes.STRING,
+   
   },
   {
     freezeTableName: true,
