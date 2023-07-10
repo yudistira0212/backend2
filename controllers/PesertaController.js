@@ -1,9 +1,11 @@
-import KegiatanModel from "../models/KegiatanModel.js";
 import PesertaModel from "../models/PesertaModel.js";
 import AbsensModel from "../models/AbsentModel.js";
+
 export const getPeserta = async (req, res) => {
   try {
-    const response = await PesertaModel.findAll();
+    const response = await PesertaModel.findAll({
+      attributes: ["uuid", "name", "nim", "fakultas", "jurusan", "gender"],
+    });
     res.status(200).json(response);
   } catch (error) {
     res.status(500).json(error);
@@ -12,19 +14,29 @@ export const getPeserta = async (req, res) => {
 
 export const getPesertaById = async (req, res) => {
   try {
-    const response = await PesertaModel.findOne({
-      where: { id: req.params.id },
+    const peserta = await PesertaModel.findOne({
+      attributes: ["uuid", "name", "nim", "fakultas", "jurusan", "gender"],
+      where: { uuid: req.params.id },
     });
-    res.status(200).json(response);
+    if (!peserta)
+      return res.status(404).json({ message: "Data tidak ditemukan" });
+    res.status(200).json(peserta);
   } catch (error) {
     res.status(404).json({ massage: error.massage });
   }
 };
 
 export const createPeserta = async (req, res) => {
+  const { name, nim, fakultas, jurusan, gender } = req.body;
   try {
-    await PesertaModel.create(req.body);
-    res.status(201).json({ massage: "user created" });
+    await PesertaModel.create({
+      name: name,
+      nim: nim,
+      fakultas: fakultas,
+      jurusan: jurusan,
+      gender: gender,
+    });
+    res.status(201).json({ massage: "Peserta Di tambahkan" });
   } catch (error) {
     console.log(error.massage);
   }
@@ -32,67 +44,30 @@ export const createPeserta = async (req, res) => {
 
 export const updatePeserta = async (req, res) => {
   try {
-    const response = await PesertaModel.update(req.body, {
+    await PesertaModel.update(req.body, {
       where: {
-        id: req.params.id,
+        uuid: req.params.id,
       },
     });
-    res.status(200).json(response);
+    res.status(200).json({ massage: "Peserta Di update" });
   } catch (error) {
     res.status(404).json({ massage: error.massage });
   }
 };
 
 export const deletePeserta = async (req, res) => {
+  const peserta = await PesertaModel.findOne({
+    where: {
+      uuid: req.params.id,
+    },
+  });
   try {
-    const id = req.params.id;
-
-    await AbsensModel.destroy({ where: { IDPeserta: id } });
-    await PesertaModel.destroy({ where: { id: id } });
+    await AbsensModel.destroy({ where: { idPeserta: peserta.id } });
+    await PesertaModel.destroy({ where: { id: peserta.id } });
 
     res.json({ message: "Data peserta dan absen berhasil dihapus" });
   } catch (error) {
     console.log("Error:", error);
     res.status(500).json({ message: "Terjadi kesalahan dalam menghapus data" });
-  }
-};
-
-export const absentPeserta = async (req, res) => {
-  const idKegiatan = req.body.idKegiatan;
-  const idPeserta = req.body.idPeserta;
-
-  try {
-    const kegiatan = await KegiatanModel.findByPk(idKegiatan);
-    if (!kegiatan) {
-      res.status(404).json({ error: "Kegiatan tidak ditemukan" });
-      return;
-    }
-
-    const keyKegiatan = kegiatan.kode;
-
-    const peserta = await PesertaModel.findByPk(idPeserta);
-    if (!peserta) {
-      res.status(404).json({ error: "Peserta tidak ditemukan" });
-      return;
-    }
-
-    if (peserta.absent !== keyKegiatan) {
-      res.status(400).json({ error: "Kode absent tidak sama" });
-      return;
-    }
-
-    const response = await PesertaModel.update(
-      {
-        absent: keyKegiatan,
-      },
-      {
-        where: {
-          id: req.params.id,
-        },
-      }
-    );
-    res.status(200).json(response);
-  } catch (error) {
-    res.status(500).json({ error: "Gagal memperbarui data peserta" });
   }
 };

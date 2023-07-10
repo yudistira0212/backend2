@@ -3,13 +3,8 @@ import db from "../config/Database.js";
 
 const { DataTypes } = Sequelize;
 
-const generateRandomCode = () => {
-  const randomCode = Math.floor(Math.random() * 10000);
-  return randomCode.toString().padStart(4, "0");
-};
-
-const KegiatanModel = db.define(
-  "kegiatan",
+const AdminModel = db.define(
+  "admin",
   {
     uuid: {
       type: DataTypes.STRING,
@@ -27,32 +22,16 @@ const KegiatanModel = db.define(
         len: [3, 100],
       },
     },
-    kegiatanKey: {
-      type: DataTypes.STRING,
-      defaultValue: generateRandomCode,
-      unique: true,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    waktum: {
+    email: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: true,
+        isEmail: true,
       },
     },
-    waktus: {
+    password: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    status: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0,
       allowNull: false,
       validate: {
         notEmpty: true,
@@ -63,5 +42,4 @@ const KegiatanModel = db.define(
     freezeTableName: true,
   }
 );
-
-export default KegiatanModel;
+export default AdminModel;

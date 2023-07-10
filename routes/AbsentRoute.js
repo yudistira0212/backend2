@@ -2,17 +2,18 @@ import express from "express";
 import {
   getAbsent,
   absen,
-  getByidSudahAbsent,
+  getByNimSudahAbsent,
   getDataByKegiatanKey,
   deleteAbsentByIdAndKey,
 } from "../controllers/AbsensiConroller.js";
+import { verifyAdmin } from "../middleware/AuthAdmin.js";
 
-const absentRouter = express.Router();
+const AbsentRouter = express.Router();
 
-absentRouter.get("/absent", getAbsent);
-absentRouter.get("/absent/kegiatan/:kegiatanKey", getDataByKegiatanKey);
-absentRouter.get("/absent/peserta/:id", getByidSudahAbsent);
-absentRouter.post("/absent", absen);
-absentRouter.delete("/absent/kegiatan/:id/:key", deleteAbsentByIdAndKey);
+AbsentRouter.get("/absent", getAbsent);
+AbsentRouter.get("/absent/kegiatan/:key", getDataByKegiatanKey);
+AbsentRouter.get("/absent/peserta/:nim", getByNimSudahAbsent);
+AbsentRouter.post("/absent", absen);
+AbsentRouter.delete("/absent/kegiatan/:id/:key", deleteAbsentByIdAndKey);
 
-export default absentRouter;
+export default AbsentRouter;

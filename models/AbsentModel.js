@@ -6,13 +6,7 @@ import PesertaModel from "./PesertaModel.js";
 const { DataTypes } = Sequelize;
 
 const AbsensModel = db.define("absensi", {
-  ID: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-    allowNull: false,
-  },
-  IDPeserta: {
+  idPeserta: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
@@ -20,7 +14,7 @@ const AbsensModel = db.define("absensi", {
       key: "id",
     },
   },
-  KeyKegiatan: {
+  kegiatanKey: {
     type: DataTypes.STRING,
     allowNull: false,
     references: {
@@ -28,15 +22,10 @@ const AbsensModel = db.define("absensi", {
       key: "kegiatanKey",
     },
   },
-  StatusAbsen: {
-    type: DataTypes.ENUM("sudah absen", "belum absen"),
+  statusAbsen: {
+    type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: "belum absen",
   },
 });
 
 export default AbsensModel;
-
-(async () => {
-  await db.sync();
-})();

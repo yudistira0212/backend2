@@ -6,25 +6,52 @@ const { DataTypes } = Sequelize;
 const PesertaModel = db.define(
   "peserta",
   {
+    uuid: {
+      type: DataTypes.STRING,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notEmpty: true,
+        len: [3, 100],
+      },
     },
     nim: {
       type: DataTypes.INTEGER,
       unique: true,
       allowNull: false,
+      validate: {
+        notEmpty: true,
+        len: [9],
+      },
     },
-    email: {
+    fakultas: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
     },
-    umur: {
-      type: DataTypes.INTEGER,
+    jurusan: {
+      type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
     },
-    gender: DataTypes.STRING,
-   
+    gender: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
   },
   {
     freezeTableName: true,
@@ -32,6 +59,3 @@ const PesertaModel = db.define(
 );
 
 export default PesertaModel;
-(async () => {
-  await db.sync();
-})();
