@@ -36,14 +36,21 @@ const KegiatanModel = db.define(
         notEmpty: true,
       },
     },
-    waktum: {
+    tanggal: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
-    waktus: {
+    jamMulai: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    jamSelesai: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {

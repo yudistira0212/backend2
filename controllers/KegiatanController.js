@@ -4,7 +4,15 @@ import AbsensModel from "../models/AbsentModel.js";
 export const getKegiatan = async (req, res) => {
   try {
     const response = await KegiatanModel.findAll({
-      attributes: ["uuid", "name", "kegiatanKey", "waktum", "waktus", "status"],
+      attributes: [
+        "uuid",
+        "name",
+        "kegiatanKey",
+        "tanggal",
+        "jamMulai",
+        "jamSelesai",
+        "status",
+      ],
     });
     res.status(200).json(response);
   } catch (error) {
@@ -15,7 +23,15 @@ export const getKegiatan = async (req, res) => {
 export const getKegiatanById = async (req, res) => {
   try {
     const kegiatan = await KegiatanModel.findOne({
-      attributes: ["uuid", "name", "kegiatanKey", "waktum", "waktus", "status"],
+      attributes: [
+        "uuid",
+        "name",
+        "kegiatanKey",
+        "tanggal",
+        "jamMulai",
+        "jamSelesai",
+        "status",
+      ],
       where: { uuid: req.params.id },
     });
     if (!kegiatan)
@@ -27,12 +43,13 @@ export const getKegiatanById = async (req, res) => {
 };
 
 export const createKegiatan = async (req, res) => {
-  const { name, waktum, waktus } = req.body;
+  const { name, tanggal, jamMulai, jamSelesai } = req.body;
   try {
     await KegiatanModel.create({
       name: name,
-      waktum: waktum,
-      waktus: waktus,
+      tanggal: tanggal,
+      jamMulai: jamMulai,
+      jamSelesai: jamSelesai,
     });
     res.status(201).json({ massage: "kegiatan ditambahkan" });
   } catch (error) {

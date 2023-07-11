@@ -20,9 +20,9 @@ const store = new sessionStore({
   db: db,
 });
 
-// (async () => {
-//   await db.sync();
-// })();
+(async () => {
+  await db.sync();
+})();
 
 app.use(
   session({
@@ -39,7 +39,11 @@ app.use(
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:3000",
+    origin: [
+      "http://localhost:3000",
+      "http://presensi.unipa.ac.id:3000",
+      "10.10.0.134:3000",
+    ],
   })
 );
 
